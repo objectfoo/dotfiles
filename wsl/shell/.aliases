@@ -1,0 +1,24 @@
+# Shell aliases
+# Sourced from .bashrc / .zshrc
+
+# Navigation
+alias p='cd ~/projects'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# Git shortcuts
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate'
+
+# Node / package managers
+alias ni='npm install'
+alias nr='npm run'
+alias pn='pnpm'
+
+# Misc
+alias k='kubectl'
+alias ll='ls -lah'
+alias cls='clear'

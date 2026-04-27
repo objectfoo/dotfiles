@@ -1,0 +1,43 @@
+# EditorConfig for the dotfiles repo itself
+# https://editorconfig.org
+root = true
+
+# Windows-side files default to CRLF
+[*]
+end_of_line = crlf
+insert_final_newline = true
+charset = utf-8
+indent_size = 2
+indent_style = space
+
+[*/wsl/*]
+end_of_line = lf
+
+# PowerShell
+[*.ps1]
+end_of_line = crlf
+indent_style = space
+indent_size = 4
+
+# All WSL/Linux-side dotfiles must be LF
+[wsl/**]
+end_of_line = lf
+
+# Shell scripts always LF
+[*.sh]
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+# Git files (stowed into WSL home) — LF
+[{.gitconfig,.gitignore_global}]
+end_of_line = lf
+
+# Markdown
+[*.md]
+end_of_line = crlf
+trim_trailing_whitespace = false
+
+# Root EditorConfig file
+[.editorconfig]
+end_of_line = crlf

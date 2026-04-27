@@ -1,0 +1,18 @@
+[wsl2]
+# CPU & Memory
+processors=8
+memory=8GB
+swap=0
+
+# Networking
+localhostForwarding=true
+dnsTunneling=true
+firewall=true
+autoProxy=true
+
+# Filesystem Performance
+kernelCommandLine = "sysctl.vm.swappiness=10"
+nestedVirtualization=true
+
+# GPU Acceleration
+guiApplications=true
