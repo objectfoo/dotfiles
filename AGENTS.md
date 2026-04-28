@@ -18,10 +18,11 @@ For detailed setup and usage, see README.md.
 
 ## Architecture Model
 
-- Single installer model: `install.sh` is the only supported setup flow.
-- Direct-link model: managed files are linked directly from `wsl/` into target locations (no GNU Stow workflow).
-- Explicit mount model: automatic drive mounting is disabled; Windows home is mounted via `/etc/fstab` at `/mnt/winhome`.
-- Git precedence model: WSL `.gitconfig` includes host `.gitconfig` last so host values override duplicates.
+- **Make-first installer**: `make install` is the primary entrypoint; `install.sh` is a compatibility wrapper.
+- **Modular scripts**: Installation organized by concern (system, shell, security, development) with independent executable tasks.
+- **Direct-link model**: Managed files are linked directly from `wsl/` into target locations (no GNU Stow workflow).
+- **Explicit mount model**: Automatic drive mounting is disabled; Windows home is mounted via `/etc/fstab` at `/mnt/winhome`.
+- **Git precedence model**: WSL `.gitconfig` includes host `.gitconfig` last so host values override duplicates.
 
 ## Script Conventions
 
@@ -29,6 +30,47 @@ For detailed setup and usage, see README.md.
 - Keep scripts idempotent; avoid destructive overwrite behavior.
 - For existing non-symlink targets, prefer warnings and safe skips over forced replacement.
 - Use clear user-facing progress output for long-running operations.
+
+### Modular Organization
+
+Scripts are organized by concern (no monolithic installer):
+
+| Directory | Purpose | Examples |
+| --- | --- | --- |
+| `scripts/lib/` | Shared libraries sourced by all tasks | `log.sh`, `link.sh`, `windows.sh`, `common.sh` |
+| `scripts/system/` | System configuration tasks | `check-wsl.sh`, `packages.sh`, `system-config.sh`, `validate.sh` |
+| `scripts/shell/` | Shell and development config | `shell.sh`, `git.sh`, `oh-my-posh.sh`, `editorconfig.sh` |
+| `scripts/security/` | Security-related setup | `ssh-copy.sh` (future: GPG, advanced SSH) |
+| `scripts/development/` | Development tool setup | (Reserved: Node.js, PHP, Neovim, etc.) |
+
+Each task script:
+- Is independently executable and idempotent.
+- Sources `scripts/lib/common.sh` to access shared functions and constants.
+- Can be run directly via `bash scripts/[category]/[task].sh` or via `make [task-name]`.
+
+### Bootstrap Pattern
+
+All task scripts follow this bootstrap pattern:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/lib/common.sh"
+
+main() {
+  require_wsl
+  # Task logic here
+}
+
+main "$@"
+```
+
+This pattern ensures:
+- Strict mode is enforced.
+- Shared libraries are loaded relative to script location.
+- DOTFILES_DIR and WSL_DIR are available.
+- WSL environment is verified before any operations.
 
 ## Configuration Ownership
 
@@ -52,13 +94,17 @@ For detailed setup and usage, see README.md.
 
 After significant changes, validate the supported flow:
 
-1. Run `install.sh` in WSL.
-2. Verify expected symlinks in `$HOME` and system link behavior for `/etc/wsl.conf`.
-3. Confirm `/etc/fstab` contains a single `/mnt/winhome` `drvfs` entry and `mount -a` succeeds.
-4. Verify Git precedence with `git config --list --show-origin`.
-5. Confirm documentation references only the current WSL-only workflow.
+1. Run `make install` in WSL and confirm successful end-to-end setup.
+2. Run `make validate` and confirm all functional checks pass.
+3. Verify expected symlinks in `$HOME` for all managed dotfiles.
+4. Verify `/etc/fstab` contains exactly one `/mnt/winhome` drvfs entry and `mount -a` succeeds.
+5. Confirm Git precedence with `git config --list --show-origin` (host .gitconfig listed last).
+6. Run `make install` again to verify idempotency and absence of destructive overwrites.
 
-No formal automated test suite is required; functional validation is the acceptance path.
+Individual task isolation:
+- `make shell` — Verify only shell dotfiles are linked.
+- `make git` — Verify only git config is linked.
+- `make validate` — Non-destructive checks only; does not modify system state.
 
 ## Operating Principle
 

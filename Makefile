@@ -3,7 +3,9 @@
 	oh-my-posh winhome-mount ssh-copy host-wslconfig \
 	help
 
-SCRIPTS_DIR := scripts/tasks
+SCRIPTS_SYSTEM := scripts/system
+SCRIPTS_SECURITY := scripts/security
+SCRIPTS_SHELL := scripts/shell
 SHELL := bash
 
 help:
@@ -41,35 +43,35 @@ install-minimal: check-wsl shell git editorconfig system-config winhome-mount ho
 
 # Individual task targets
 check-wsl:
-	@bash $(SCRIPTS_DIR)/check-wsl.sh
+	@bash $(SCRIPTS_SYSTEM)/check-wsl.sh
 
 packages:
-	@bash $(SCRIPTS_DIR)/packages.sh
+	@bash $(SCRIPTS_SYSTEM)/packages.sh
 
 shell:
-	@bash $(SCRIPTS_DIR)/shell.sh
+	@bash $(SCRIPTS_SHELL)/shell.sh
 
 git:
-	@bash $(SCRIPTS_DIR)/git.sh
+	@bash $(SCRIPTS_SHELL)/git.sh
 
 editorconfig:
-	@bash $(SCRIPTS_DIR)/editorconfig.sh
+	@bash $(SCRIPTS_SHELL)/editorconfig.sh
 
 system-config:
-	@bash $(SCRIPTS_DIR)/system-config.sh
+	@bash $(SCRIPTS_SYSTEM)/system-config.sh
 
 oh-my-posh:
-	@bash $(SCRIPTS_DIR)/oh-my-posh.sh
+	@bash $(SCRIPTS_SHELL)/oh-my-posh.sh
 
 winhome-mount:
-	@bash $(SCRIPTS_DIR)/winhome-mount.sh
+	@bash $(SCRIPTS_SYSTEM)/winhome-mount.sh
 
 ssh-copy:
-	@bash $(SCRIPTS_DIR)/ssh-copy.sh
+	@bash $(SCRIPTS_SECURITY)/ssh-copy.sh
 
 host-wslconfig:
-	@bash $(SCRIPTS_DIR)/host-wslconfig.sh
+	@bash $(SCRIPTS_SYSTEM)/host-wslconfig.sh
 
 # Validation target
 validate: check-wsl
-	@bash $(SCRIPTS_DIR)/validate.sh
+	@bash $(SCRIPTS_SYSTEM)/validate.sh
