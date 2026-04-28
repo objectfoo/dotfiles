@@ -180,17 +180,22 @@ ensure_oh_my_posh() {
         log_ok "oh-my-posh installed to ~/.local/bin."
     fi
 
-    local omp_theme="powerlevel10k_rainbow.omp.json"
-    local omp_theme_path="$HOME/.config/oh-my-posh/themes/p10k.omp.json"
-    local omp_theme_url="https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/${omp_theme}"
+    local source_theme="$DOTFILES_DIR/oh-my-posh/themes/high-contrast.omp.json"
+    local target_theme="$HOME/.config/oh-my-posh/themes/high-contrast.omp.json"
 
-    if [ ! -f "$omp_theme_path" ]; then
-        log_info "Downloading default oh-my-posh theme..."
-        curl -fsSL "$omp_theme_url" -o "$omp_theme_path"
-        log_ok "Default oh-my-posh theme ready: $omp_theme_path"
-    else
-        log_info "oh-my-posh theme already present, skipping download."
+    if [ ! -f "$source_theme" ]; then
+        log_warn "Managed theme missing, skipping: $source_theme"
+        return
     fi
+
+    if [ -f "$target_theme" ] && cmp -s "$source_theme" "$target_theme"; then
+        log_info "oh-my-posh theme already up to date: $target_theme"
+        return
+    fi
+
+    mkdir -p "$(dirname "$target_theme")"
+    cp "$source_theme" "$target_theme"
+    log_ok "Installed managed oh-my-posh theme: $target_theme"
 }
 
 link_managed_files() {
@@ -264,6 +269,55 @@ link_windows_wslconfig() {
     link_file_sudo "$source" "$target"
 }
 
+copy_windows_ssh_files() {
+    local windows_ssh_dir="/mnt/winhome/.ssh"
+    local target_ssh_dir="$HOME/.ssh"
+
+    if [ ! -d "$windows_ssh_dir" ]; then
+        log_warn "Windows .ssh directory not found, skipping SSH copy: $windows_ssh_dir"
+        return
+    fi
+
+    mkdir -p "$target_ssh_dir"
+    chmod 700 "$target_ssh_dir"
+
+    local copied=0
+    local skipped=0
+
+    shopt -s nullglob dotglob
+    for source_path in "$windows_ssh_dir"/*; do
+        [ -f "$source_path" ] || continue
+
+        local file_name
+        local target_path
+        file_name="$(basename "$source_path")"
+        target_path="$target_ssh_dir/$file_name"
+
+        if [ -e "$target_path" ]; then
+            log_info "SSH file exists, skipping: $target_path"
+            skipped=$((skipped + 1))
+            continue
+        fi
+
+        cp -p "$source_path" "$target_path"
+
+        case "$file_name" in
+            *.pub|known_hosts|config)
+                chmod 644 "$target_path"
+                ;;
+            *)
+                chmod 600 "$target_path"
+                ;;
+        esac
+
+        copied=$((copied + 1))
+        log_ok "Copied SSH file: $target_path"
+    done
+    shopt -u nullglob dotglob
+
+    log_info "SSH copy summary: copied=$copied skipped=$skipped"
+}
+
 post_install_guidance() {
     cat <<'EOF'
 
@@ -297,6 +351,7 @@ main() {
     local windows_home_path
     windows_home_path="$(resolve_windows_home_path || true)"
     ensure_fstab_mount "$windows_home_path"
+    copy_windows_ssh_files
     link_windows_wslconfig "$windows_user"
 
     log_info "Cleaning up apt cache..."

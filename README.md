@@ -22,11 +22,22 @@ dotfiles/
       .editorconfig
       .wslconfig                   # Windows config file for wsl
       wsl.conf
+  oh-my-posh/
+    themes/
+      high-contrast.omp.json
 ```
+
 
 ## Quick Start (WSL Only)
 
-Run from inside your WSL distro:
+**Begin**: copy `~/dotfiles/wsl/config/.wslconfig` to `~/.wslconfig` in the windows host system. To configure your instance a bit.
+
+**Install Ubuntu**, and launch
+```pwsh
+> wsl --install Ubuntu
+```
+
+**Run from inside your WSL distro**:
 
 ```bash
 > chmod +x install.sh
@@ -36,8 +47,10 @@ Run from inside your WSL distro:
 The installer:
 - Installs required base packages via apt.
 - Creates direct symlinks from repository-managed dotfiles to target locations.
+- Installs managed oh-my-posh theme from `oh-my-posh/themes/high-contrast.omp.json`.
 - Links `wsl/config/wsl.conf` to `/etc/wsl.conf`.
 - Ensures explicit Windows home mount via `/etc/fstab` (`/mnt/winhome` using `drvfs`).
+- Copies SSH files from `/mnt/winhome/.ssh` to `$HOME/.ssh` with secure permissions.
 - Links `wsl/config/.wslconfig` to the Windows host profile path.
 
 ## Dotfile Linking Model (No Stow)
@@ -57,7 +70,7 @@ Primary user links:
 
 System/host links:
 - `wsl/config/wsl.conf` -> `/etc/wsl.conf`
-- `wsl/config/.wslconfig` -> `/mnt/c/Users/<windows-user>/.wslconfig`
+- `wsl/config/.wslconfig` -> `/mnt/winhome/.wslconfig`
 
 ## Git Configuration Precedence
 
@@ -82,7 +95,12 @@ After changing WSL config:
 
 ## First-Time Git Personalization
 
-Edit `wsl/git/.gitconfig` and set your identity:
+
+If you have a `.gitconfig` at the root with your name and email set those settings will override WSL `.gitconfig`.
+
+SSH files are copied from `/mnt/winhome/.ssh` into `~/.ssh` if they do not already exist.
+
+Otherwise `~/.gitconfig` and set your identity:
 
 ```ini
 [user]

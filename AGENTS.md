@@ -20,7 +20,7 @@ For detailed setup and usage, see README.md.
 
 - Single installer model: `install.sh` is the only supported setup flow.
 - Direct-link model: managed files are linked directly from `wsl/` into target locations (no GNU Stow workflow).
-- Explicit mount model: automatic drive mounting is disabled; C: is mounted via `/etc/fstab` at `/mnt/c`.
+- Explicit mount model: automatic drive mounting is disabled; Windows home is mounted via `/etc/fstab` at `/mnt/winhome`.
 - Git precedence model: WSL `.gitconfig` includes host `.gitconfig` last so host values override duplicates.
 
 ## Script Conventions
@@ -54,7 +54,7 @@ After significant changes, validate the supported flow:
 
 1. Run `install.sh` in WSL.
 2. Verify expected symlinks in `$HOME` and system link behavior for `/etc/wsl.conf`.
-3. Confirm `/etc/fstab` contains a single `/mnt/c` `drvfs` entry and `mount -a` succeeds.
+3. Confirm `/etc/fstab` contains a single `/mnt/winhome` `drvfs` entry and `mount -a` succeeds.
 4. Verify Git precedence with `git config --list --show-origin`.
 5. Confirm documentation references only the current WSL-only workflow.
 
