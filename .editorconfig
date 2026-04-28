@@ -33,6 +33,11 @@ indent_size = 2
 [{.gitconfig,.gitignore_global}]
 end_of_line = lf
 
+# Makefile — requires tabs, CRLF on Windows
+[Makefile]
+end_of_line = crlf
+indent_style = tab
+
 # Markdown
 [*.md]
 end_of_line = crlf
