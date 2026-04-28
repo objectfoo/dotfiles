@@ -1,4 +1,5 @@
-# dotfiles
+# Dotfiles
+<a name="#dotfiles"></a>
 
 Personal dotfiles for a Windows 11 + WSL2 frontend development environment.
 
@@ -122,3 +123,10 @@ Otherwise `~/.gitconfig` and set your identity:
 3. Confirm `/etc/fstab` has a single `/mnt/winhome` `drvfs` entry and `sudo mount -a` succeeds.
 4. Run `git config --list --show-origin` and verify host values override local duplicates.
 5. Restart WSL and verify automount is disabled while `/mnt/winhome` remains available via fstab.
+
+## Links
+
+* [dotfiles/marcovega](https://github.com/marcovega/dotfiles)
+* [dotfiles/davidgasquez](https://github.com/davidgasquez/dotfiles/blob/main/Makefile) (for the makefile)
+* [top](#dotfiles)
+
