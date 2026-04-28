@@ -70,21 +70,6 @@ ssh-copy:
 host-wslconfig:
 	@bash $(SCRIPTS_DIR)/host-wslconfig.sh
 
-# Validation target (step 5 will expand this)
+# Validation target
 validate: check-wsl
-	@printf "\n[INFO] Validation checks:\n"
-	@printf "[INFO] 1. WSL environment verified.\n"
-	@printf "[INFO] 2. Checking symlinks in \$$HOME...\n"
-	@test -L $$HOME/.gitconfig && printf "[ OK ] .gitconfig is symlinked\n" || printf "[WARN] .gitconfig not symlinked\n"
-	@test -L $$HOME/.aliases && printf "[ OK ] .aliases is symlinked\n" || printf "[WARN] .aliases not symlinked\n"
-	@test -L $$HOME/.exports && printf "[ OK ] .exports is symlinked\n" || printf "[WARN] .exports not symlinked\n"
-	@test -f $$HOME/.bashrc && printf "[ OK ] .bashrc exists\n" || printf "[WARN] .bashrc missing\n"
-	@test -f $$HOME/.editorconfig && printf "[ OK ] .editorconfig exists\n" || printf "[WARN] .editorconfig missing\n"
-	@printf "[INFO] 3. Checking /etc/wsl.conf...\n"
-	@sudo test -L /etc/wsl.conf && printf "[ OK ] /etc/wsl.conf is symlinked\n" || printf "[WARN] /etc/wsl.conf not symlinked\n"
-	@printf "[INFO] 4. Checking /etc/fstab for /mnt/winhome entry...\n"
-	@sudo grep -c "winhome.*drvfs" /etc/fstab >/dev/null 2>&1 && printf "[ OK ] /etc/fstab contains winhome mount\n" || printf "[WARN] /etc/fstab missing winhome mount\n"
-	@printf "[INFO] 5. Git precedence guidance:\n"
-	@printf "     Run: git config --list --show-origin\n"
-	@printf "     Verify host .gitconfig is listed last (highest precedence).\n"
-	@printf "\n[ OK ] Validation checks complete.\n"
+	@bash $(SCRIPTS_DIR)/validate.sh
