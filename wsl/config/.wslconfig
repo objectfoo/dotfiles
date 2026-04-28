@@ -1,3 +1,5 @@
+# WINDOWS FILE - this belongs in the windows system user home dir
+
 [wsl2]
 # CPU & Memory
 processors=8
