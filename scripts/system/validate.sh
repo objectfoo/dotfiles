@@ -79,11 +79,11 @@ main() {
     warn=$((warn + 1))
   fi
 
-  if [ -d /mnt/winhome ]; then
-    log_ok "  ✓ /mnt/winhome mount point exists"
+  if is_mount_active /mnt/winhome; then
+    log_ok "  ✓ /mnt/winhome mount is active"
     pass=$((pass + 1))
   else
-    log_warn "  ✗ /mnt/winhome mount point missing"
+    log_warn "  ✗ /mnt/winhome mount is not active"
     warn=$((warn + 1))
   fi
   printf "\n"

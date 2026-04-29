@@ -6,7 +6,15 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/lib/common.sh"
 main() {
   require_wsl
 
-  local windows_ssh_dir="/mnt/winhome/.ssh"
+  local mount_point
+  mount_point="$(winhome_mount_point)"
+
+  if ! is_mount_active "$mount_point"; then
+    log_warn "Windows home mount is not active at $mount_point; skipping SSH copy."
+    return
+  fi
+
+  local windows_ssh_dir="$mount_point/.ssh"
   local target_ssh_dir="$HOME/.ssh"
 
   if [ ! -d "$windows_ssh_dir" ]; then

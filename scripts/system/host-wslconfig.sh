@@ -6,17 +6,18 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/lib/common.sh"
 main() {
   require_wsl
 
-  local windows_user
-  windows_user="$(resolve_windows_user || true)"
-  if [ -z "$windows_user" ]; then
-    log_warn "Unable to resolve Windows username; skipping .wslconfig host link."
+  local mount_point
+  mount_point="$(winhome_mount_point)"
+
+  if ! is_mount_active "$mount_point"; then
+    log_warn "Windows home mount is not active at $mount_point; skipping .wslconfig host deploy."
     return
   fi
 
   local source="$WSL_DIR/config/.wslconfig"
-  local target="/mnt/winhome/.wslconfig"
+  local target="$mount_point/.wslconfig"
 
-  link_file_sudo "$source" "$target"
+  deploy_file_sudo "$source" "$target"
 }
 
 main "$@"

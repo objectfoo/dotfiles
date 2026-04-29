@@ -24,7 +24,7 @@ help:
 	@printf "  make oh-my-posh        Install and configure oh-my-posh\n"
 	@printf "  make winhome-mount     Configure /etc/fstab for Windows home mount\n"
 	@printf "  make ssh-copy          Copy SSH files from Windows .ssh directory\n"
-	@printf "  make host-wslconfig    Link .wslconfig to Windows home (privileged)\n"
+	@printf "  make host-wslconfig    Copy .wslconfig to Windows home (privileged)\n"
 
 # Full installation: mirrors current install.sh sequence
 install: check-wsl packages oh-my-posh shell git editorconfig system-config winhome-mount ssh-copy host-wslconfig
@@ -35,7 +35,7 @@ install: check-wsl packages oh-my-posh shell git editorconfig system-config winh
 	@printf "3. Verify git precedence: git config --list --show-origin\n"
 
 # Minimal installation: core dotfiles without packages/oh-my-posh/ssh-copy
-install-minimal: check-wsl shell git editorconfig system-config winhome-mount host-wslconfig
+install-minimal: check-wsl packages shell git editorconfig system-config winhome-mount host-wslconfig
 	@printf "\n[ OK ] WSL dotfiles minimal installation complete.\n"
 	@printf "\nNext steps:\n"
 	@printf "1. Restart WSL to apply /etc/wsl.conf changes: wsl.exe --shutdown\n"

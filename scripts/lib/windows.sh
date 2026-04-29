@@ -36,3 +36,18 @@ resolve_windows_home_path() {
     normalize_windows_path_for_drvfs "$candidate"
   fi
 }
+
+winhome_mount_point() {
+  printf "%s" "/mnt/winhome"
+}
+
+is_mount_active() {
+  local mount_point="$1"
+
+  if command -v mountpoint >/dev/null 2>&1; then
+    mountpoint -q "$mount_point"
+    return
+  fi
+
+  grep -qs " $mount_point " /proc/mounts
+}

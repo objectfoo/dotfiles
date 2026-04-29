@@ -41,7 +41,7 @@ dotfiles/
 │   │   ├── host-wslconfig.ps1    # Install host %USERPROFILE%\.wslconfig from repo
 │   │   ├── packages.sh           # Install apt packages
 │   │   ├── system-config.sh      # Link /etc/wsl.conf
-│   │   ├── host-wslconfig.sh     # Link /mnt/winhome/.wslconfig
+│   │   ├── host-wslconfig.sh     # Copy /mnt/winhome/.wslconfig
 │   │   ├── winhome-mount.sh      # Configure /etc/fstab
 │   │   └── validate.sh           # Validation checks
 │   ├── shell/                     # Shell configuration tasks
@@ -148,7 +148,7 @@ make help
 - **make oh-my-posh** — Install and configure oh-my-posh
 - **make winhome-mount** — Configure /etc/fstab for Windows home mount
 - **make ssh-copy** — Copy SSH files from Windows
-- **make host-wslconfig** — Link .wslconfig to Windows home (privileged)
+- **make host-wslconfig** — Copy .wslconfig to Windows home (privileged)
 
 ## Dotfile Linking Model (No Stow)
 
@@ -174,7 +174,7 @@ Most managed files are symlinked directly with idempotent checks. Existing non-s
 | Source | Target | Type |
 | --- | --- | --- |
 | `wsl/config/wsl.conf` | `/etc/wsl.conf` | Symlinked |
-| `wsl/config/.wslconfig` | `/mnt/winhome/.wslconfig` | Symlinked |
+| `wsl/config/.wslconfig` | `/mnt/winhome/.wslconfig` | Copied |
 
 ## Git Configuration Precedence
 

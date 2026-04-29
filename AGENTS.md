@@ -75,7 +75,7 @@ This pattern ensures:
 ## Configuration Ownership
 
 - `/etc/wsl.conf` is managed from `wsl/config/wsl.conf`.
-- Host `.wslconfig` is managed from `wsl/config/.wslconfig` and linked to the Windows profile path.
+- Host `.wslconfig` is managed from `wsl/config/.wslconfig` and copied to the Windows profile path.
 - Repository changes must keep `wsl/config/wsl.conf` compatible with explicit `fstab` mounting.
 
 ## Security and Secrets

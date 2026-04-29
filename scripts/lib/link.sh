@@ -93,3 +93,34 @@ deploy_file() {
   cp "$source" "$target"
   log_ok "Deployed managed file: $target"
 }
+
+deploy_file_sudo() {
+  local source="$1"
+  local target="$2"
+
+  if [ ! -e "$source" ]; then
+    log_warn "Source missing, skipping privileged file deploy: $source"
+    return
+  fi
+
+  sudo mkdir -p "$(dirname "$target")"
+
+  if sudo test -L "$target"; then
+    sudo rm -f "$target"
+    sudo cp "$source" "$target"
+    log_ok "Replaced privileged symlink with managed file: $target"
+    return
+  fi
+
+  if sudo test -e "$target"; then
+    if sudo cmp -s "$source" "$target"; then
+      log_info "Managed privileged file already up to date: $target"
+    else
+      log_warn "Privileged target exists and differs, skipping file deploy: $target"
+    fi
+    return
+  fi
+
+  sudo cp "$source" "$target"
+  log_ok "Deployed managed privileged file: $target"
+}
