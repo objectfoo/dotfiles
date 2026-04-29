@@ -38,6 +38,7 @@ dotfiles/
 │   │   └── windows.sh            # Windows path resolution utilities
 │   ├── system/                    # System configuration tasks
 │   │   ├── check-wsl.sh          # Verify WSL environment
+│   │   ├── host-wslconfig.ps1    # Install host %USERPROFILE%\.wslconfig from repo
 │   │   ├── packages.sh           # Install apt packages
 │   │   ├── system-config.sh      # Link /etc/wsl.conf
 │   │   ├── host-wslconfig.sh     # Link /mnt/winhome/.wslconfig
@@ -73,7 +74,27 @@ dotfiles/
 
 ### Prerequisites
 
-**On Windows**: Copy `wsl/config/.wslconfig` to `~/.wslconfig` to configure your WSL instance before first run.
+**On Windows**: Run the PowerShell helper to install the managed `.wslconfig` into your Windows profile before first run.
+
+```powershell
+pwsh -NoProfile -File .\install-windows.ps1
+```
+
+Alternate root alias:
+
+```powershell
+pwsh -NoProfile -File .\install-powershell.ps1
+```
+
+Useful options:
+
+```powershell
+# Preview actions only (no changes)
+pwsh -NoProfile -File .\install-windows.ps1 -WhatIf
+
+# Replace existing target when it differs
+pwsh -NoProfile -File .\install-windows.ps1 -Force
+```
 
 ```pwsh
 > wsl --install Ubuntu
@@ -84,7 +105,7 @@ dotfiles/
 Run from inside your WSL distro:
 
 ```bash
-cd ~/dotfiles
+cd dotfiles
 make install
 ```
 

@@ -126,8 +126,8 @@ fi
 
 # oh-my-posh prompt
 if command -v oh-my-posh >/dev/null 2>&1; then
-    if [ -f ~/.config/oh-my-posh/themes/p10k.omp.json ]; then
-        eval "$(oh-my-posh init bash --config ~/.config/oh-my-posh/themes/p10k.omp.json)"
+    if [ -f ~/.config/oh-my-posh/themes/high-contrast.omp.json ]; then
+        eval "$(oh-my-posh init bash --config ~/.config/oh-my-posh/themes/high-contrast.omp.json)"
     else
         eval "$(oh-my-posh init bash)"
     fi
