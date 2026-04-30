@@ -4,73 +4,111 @@
   "blocks": [
     {
       "alignment": "left",
-      "type": "prompt",
+      "newline": true,
       "segments": [
         {
-          "type": "status",
+          "type": "session",
           "style": "diamond",
-          "foreground": "#ffffff",
-          "background": "#ff0000",
-          "background_templates": [
-            "{{ if gt .Code 0 }}#ff0000{{ end }}"
-          ],
-          "template": " \uF00D {{ .Code }} ",
-          "properties": {
-            "always_enabled": false
-          }
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b0",
+          "foreground": "#111111",
+          "background": "#f8f8f8",
+          "template": " {{ .UserName }} "
         },
         {
           "type": "path",
           "style": "powerline",
-          "powerline_symbol": "\uE0B0",
+          "powerline_symbol": "\ue0b0",
           "foreground": "#ffffff",
           "background": "#005fdf",
           "properties": {
             "cache_duration": "none",
-            "style": "unique",
-            "max_depth": 4
+            "home_icon": "~",
+            "mapped_locations": {
+              "/mnt/winhome": "winhome"
+            },
+            "max_depth": 4,
+            "style": "folder"
           },
-          "template": " \uEB06 {{ .Path }} "
+          "template": " \ueb06 {{ .Parent }}{{ .Path }} "
         },
         {
           "type": "git",
           "style": "powerline",
-          "powerline_symbol": "\uE0B0",
-          "foreground": "#000000",
-          "background": "#00ffff",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#111111",
+          "background": "#00e5ff",
           "properties": {
-            "branch_icon": "",
-            "branch_identical_icon": "",
-            "branch_ahead_icon": "",
-            "branch_behind_icon": "",
-            "fetch_status": true,
-            "display_status": true
+            "branch_icon": "\ue725 ",
+            "branch_identical_icon": "=",
+            "branch_ahead_icon": "\u2191{{ .Ahead }}",
+            "branch_behind_icon": "\u2193{{ .Behind }}",
+            "cache_duration": "none",
+            "display_status": true,
+            "fetch_status": true
           },
-          "template": " \uF126 {{ .HEAD }}{{ if .Staging.Changed }} \uF046 {{ .Staging.String }}{{ end }}{{ if .Working.Changed }} \uF044 {{ .Working.String }}{{ end }} "
+          "template": " {{ .HEAD }}{{ if or .Working.Changed .Staging.Changed }} {{ if .Staging.Changed }}\uf046 {{ .Staging.String }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ end }} "
         },
         {
           "type": "node",
           "style": "powerline",
-          "powerline_symbol": "\uE0B0",
-          "foreground": "#000000",
-          "background": "#ffff00",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#111111",
+          "background": "#fff200",
           "properties": {
             "cache_duration": "none"
           },
-          "template": " \uE718 {{ .Full }} "
+          "template": " \ue718 {{ .Full }} "
         },
         {
           "type": "npm",
           "style": "powerline",
-          "powerline_symbol": "\uE0B0",
-          "foreground": "#000000",
-          "background": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#111111",
+          "background": "#ff8c00",
           "properties": {
             "cache_duration": "none"
           },
-          "template": " \uE71E {{ .Full }} "
+          "template": " \ue71e {{ .Full }} "
+        },
+        {
+          "type": "status",
+          "style": "diamond",
+          "trailing_diamond": "\ue0b4",
+          "foreground": "#ffffff",
+          "background": "#d90429",
+          "background_templates": [
+            "{{ if gt .Code 0 }}#d90429{{ end }}",
+            "{{ if eq .Code 0 }}transparent{{ end }}"
+          ],
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#ffffff{{ end }}",
+            "{{ if eq .Code 0 }}transparent{{ end }}"
+          ],
+          "template": " \uf00d {{ .Code }} ",
+          "properties": {
+            "always_enabled": true
+          }
         }
-      ]
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "#00ff85",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#ff4d6d{{ end }}"
+          ],
+          "template": "❯ "
+        }
+      ],
+      "type": "prompt"
     }
-  ]
+  ],
+  "final_space": true
 }

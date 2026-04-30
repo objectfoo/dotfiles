@@ -75,6 +75,7 @@ Stage 2 (`setupdeveloper.sh`) performs developer setup:
 - Links `wsl/shell/.aliases` to `~/.aliases`.
 - Links `wsl/shell/.exports` to `~/.exports`.
 - Ensures `~/.bashrc` sources `~/.aliases` and `~/.exports`.
+- Adds managed oh-my-posh initialization to the existing `~/.bashrc`.
 - Copies managed oh-my-posh theme from `oh-my-posh/themes/high-contrast.omp.json` to `~/.config/oh-my-posh/themes`.
 
 ## Dotfile Linking Model (No Stow)

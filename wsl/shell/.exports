@@ -1,6 +1,14 @@
 # Shell exports
 # Sourced from .bashrc / .zshrc
 
+# Helper to add to PATH without duplicates
+prepend_path() {
+    local dir="$1"
+    if [[ ":$PATH:" != *":$dir:"* ]]; then
+        export PATH="$dir:$PATH"
+    fi
+}
+
 # XDG Base Directories
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -12,7 +20,7 @@ export VISUAL="$EDITOR"
 
 # Volta
 export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+prepend_path "$VOLTA_HOME/bin"
 
 # Local bin
-export PATH="$HOME/.local/bin:$PATH"
+prepend_path "$HOME/.local/bin"
