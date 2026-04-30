@@ -11,7 +11,7 @@ Keep instructions concise, actionable, and specific to this workspace.
 ## Repository Layout
 
 - initwsl.sh: stage 1 WSL bootstrap and host integration setup.
-- setupdeveoper.sh: stage 2 developer shell and theme setup.
+- setupdeveloper.sh: stage 2 developer shell and theme setup.
 - install.sh: compatibility wrapper for stage scripts.
 - wsl/: WSL-managed dotfiles and configuration.
 - .editorconfig: root formatting and line-ending rules for this repository.
@@ -20,7 +20,7 @@ For detailed setup and usage, see README.md.
 
 ## Architecture Model
 
-- Two-stage installer model: `initwsl.sh` bootstraps WSL system setup and `setupdeveoper.sh` completes developer dotfile setup.
+- Two-stage installer model: `initwsl.sh` bootstraps WSL system setup and `setupdeveloper.sh` completes developer dotfile setup.
 - Direct-link model: managed files are linked directly from `wsl/` into target locations (no GNU Stow workflow).
 - Explicit mount model: automatic drive mounting is disabled; Windows home is mounted via `/etc/fstab` at `/mnt/winhome`.
 - Git precedence model: WSL `.gitconfig` includes host `.gitconfig` last so host values override duplicates.
@@ -58,7 +58,7 @@ After significant changes, validate the supported flow:
 2. Verify system link behavior for `/etc/wsl.conf`.
 3. Confirm `/etc/fstab` contains a single `/mnt/winhome` `drvfs` entry and `mount -a` succeeds.
 4. Verify `~/.ssh` and `~/.gitconfig` link to `/mnt/winhome`.
-5. Restart WSL, then run `setupdeveoper.sh` and verify shell/theme setup behavior.
+5. Restart WSL, then run `setupdeveloper.sh` and verify shell/theme setup behavior.
 
 No formal automated test suite is required; functional validation is the acceptance path.
 

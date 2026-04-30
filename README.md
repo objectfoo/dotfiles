@@ -11,7 +11,7 @@ This repository uses a two-stage WSL-driven install flow.
 dotfiles/
   install.sh                       # helper entrypoint for split install scripts
   initwsl.sh                       # stage 1: base WSL bootstrap
-  setupdeveoper.sh                 # stage 2: developer shell/theme setup
+  setupdeveloper.sh                 # stage 2: developer shell/theme setup
   wsl/
     shell/
       .bashrc
@@ -43,7 +43,7 @@ dotfiles/
 **Run from inside your WSL distro**:
 
 ```bash
-> chmod +x initwsl.sh setupdeveoper.sh install.sh
+> chmod +x initwsl.sh setupdeveloper.sh install.sh
   ./initwsl.sh
 ```
 
@@ -68,10 +68,10 @@ git clone <your-dotfiles-repo-url> dotfiles
 
 ```bash
 cd ~/dotfiles
-./setupdeveoper.sh
+./setupdeveloper.sh
 ```
 
-Stage 2 (`setupdeveoper.sh`) performs developer setup:
+Stage 2 (`setupdeveloper.sh`) performs developer setup:
 - Links `wsl/shell/.aliases` to `~/.aliases`.
 - Links `wsl/shell/.exports` to `~/.exports`.
 - Ensures `~/.bashrc` sources `~/.aliases` and `~/.exports`.
@@ -86,7 +86,7 @@ Stage 1 (`initwsl.sh`) creates system/host links:
 - `/mnt/winhome/.ssh` -> `~/.ssh`
 - `/mnt/winhome/.gitconfig` -> `~/.gitconfig`
 
-Stage 2 (`setupdeveoper.sh`) creates shell links:
+Stage 2 (`setupdeveloper.sh`) creates shell links:
 - `wsl/shell/.aliases` -> `~/.aliases`
 - `wsl/shell/.exports` -> `~/.exports`
 
@@ -134,7 +134,7 @@ If needed, set identity in your host `.gitconfig`:
 2. Confirm `/etc/fstab` has a single `/mnt/winhome` `drvfs` entry and `sudo mount -a` succeeds.
 3. Verify `~/.ssh` and `~/.gitconfig` link to `/mnt/winhome`.
 4. Restart WSL and verify automount is disabled while `/mnt/winhome` remains available via fstab.
-5. Run `./setupdeveoper.sh` and verify `~/.bashrc` sources `~/.aliases` and `~/.exports`.
+5. Run `./setupdeveloper.sh` and verify `~/.bashrc` sources `~/.aliases` and `~/.exports`.
 
 ## Links
 

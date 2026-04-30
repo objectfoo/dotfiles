@@ -9,7 +9,7 @@ main() {
             exec bash "$DOTFILES_DIR/initwsl.sh"
             ;;
         setup)
-            exec bash "$DOTFILES_DIR/setupdeveoper.sh"
+            exec bash "$DOTFILES_DIR/setupdeveloper.sh"
             ;;
         *)
             cat <<'EOF'
@@ -19,7 +19,7 @@ This installer is split into two scripts:
    ./initwsl.sh
 
 2) after restarting WSL and cloning dotfiles to ~/dotfiles:
-   ./setupdeveoper.sh
+   ./setupdeveloper.sh
 
 Optional shortcuts:
   ./install.sh init

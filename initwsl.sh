@@ -189,7 +189,7 @@ Next steps:
   git clone <your-dotfiles-repo-url> dotfiles
 3. Run the second stage:
   cd ~/dotfiles
-  ./setupdeveoper.sh
+  ./setupdeveloper.sh
 EOF
 }
 

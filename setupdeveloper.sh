@@ -115,7 +115,7 @@ main() {
 
     cat <<'EOF'
 
-setupdeveoper.sh complete.
+setupdeveloper.sh complete.
 
 Next step:
   source ~/.bashrc
