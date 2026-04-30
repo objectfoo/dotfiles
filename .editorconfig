@@ -10,24 +10,24 @@ charset = utf-8
 indent_size = 2
 indent_style = space
 
-[*/wsl/*]
-end_of_line = lf
-
 # PowerShell
 [*.ps1]
 end_of_line = crlf
 indent_style = space
 indent_size = 4
 
-# All WSL/Linux-side dotfiles must be LF
-[wsl/**]
-end_of_line = lf
-
-# Shell scripts always LF
+# Shell scripts
 [*.sh]
 end_of_line = lf
 indent_style = space
 indent_size = 2
+
+# All WSL/Linux-side dotfiles must be LF
+[{/wsl/**,.aliases,.bashrc,.exports}]
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = false
 
 # Git files (stowed into WSL home) — LF
 [{.gitconfig,.gitignore_global}]

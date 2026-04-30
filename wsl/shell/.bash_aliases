@@ -2,7 +2,6 @@
 # Sourced from .bashrc / .zshrc
 
 # Navigation
-alias p='cd ~/projects'
 alias ..='cd ..'
 alias ...='cd ../..'
 
@@ -19,6 +18,5 @@ alias nr='npm run'
 alias pn='pnpm'
 
 # Misc
-alias k='kubectl'
 alias ll='ls -lah'
 alias cls='clear'

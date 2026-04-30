@@ -142,4 +142,3 @@ If needed, set identity in your host `.gitconfig`:
 * [dotfiles/marcovega](https://github.com/marcovega/dotfiles)
 * [dotfiles/davidgasquez](https://github.com/davidgasquez/dotfiles/blob/main/Makefile) (for the makefile)
 * [top](#dotfiles)
-

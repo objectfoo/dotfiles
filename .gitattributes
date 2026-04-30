@@ -3,3 +3,6 @@
 
 # Shell scripts must use LF in the repository
 *.sh text eol=lf
+
+# WSL-managed files should always remain LF
+wsl/** text eol=lf

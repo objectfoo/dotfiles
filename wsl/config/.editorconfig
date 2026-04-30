@@ -28,6 +28,7 @@ end_of_line = lf
 end_of_line = lf
 indent_style = space
 indent_size = 2
+insert_final_newline = false
 
 # Git files (stowed into WSL home) — LF
 [{.gitconfig,.gitignore_global}]

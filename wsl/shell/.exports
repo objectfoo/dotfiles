@@ -18,9 +18,5 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 
-# Volta
-export VOLTA_HOME="$HOME/.volta"
-prepend_path "$VOLTA_HOME/bin"
-
 # Local bin
 prepend_path "$HOME/.local/bin"
