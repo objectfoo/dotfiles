@@ -27,7 +27,7 @@ ensure_apt_packages() {
     log_info "Installing base packages (apt)..."
     sudo apt update
     sudo apt install -y --no-install-recommends \
-        build-essential curl git unzip gh zoxide fzf jq socat
+        build-essential curl git unzip
 
     mkdir -p \
         "$HOME/projects" \
