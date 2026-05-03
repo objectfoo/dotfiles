@@ -130,3 +130,9 @@ Otherwise `~/.gitconfig` and set your identity:
 * [dotfiles/davidgasquez](https://github.com/davidgasquez/dotfiles/blob/main/Makefile) (for the makefile)
 * [top](#dotfiles)
 
+## WSL2 Setup Agent Skill
+
+- The canonical agent skill for WSL2 Ubuntu 24.04 setup is in [wsl/setup-wsl2-env/SKILL.md](wsl/setup-wsl2-env/SKILL.md).
+- Example configuration files for `.wslconfig` and `/etc/wsl.conf` are in [wsl/setup-wsl2-env/examples/](wsl/setup-wsl2-env/examples/).
+- All agent-driven setup and documentation should reference these files for consistency.
+

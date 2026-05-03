@@ -1,0 +1,42 @@
+# WSL2 Distro Configuration
+# Location: /etc/wsl.conf (inside the WSL distro)
+#
+# This configuration enables systemd, Windows path interoperability, and fixes
+# file permission issues when accessing Windows filesystems from WSL.
+#
+# Edit with: sudo nano /etc/wsl.conf
+# Save with: Ctrl+O, then exit with: Ctrl+X
+#
+# After editing, restart WSL from PowerShell:
+#   wsl --shutdown
+#   wsl
+#
+# Replace <USER_NAME> below with your actual Unix username.
+
+[user]
+# Default user to run as when WSL starts
+# Must match the username created during distro installation
+default=<USER_NAME>
+
+[boot]
+# === SYSTEMD INTEGRATION ===
+# Enable systemd as the init system
+# Required for Docker, databases, systemctl commands, and other services
+systemd=true
+
+[interop]
+# === WINDOWS INTEROPERABILITY ===
+# Append Windows PATH entries to WSL PATH
+# Enables commands like 'code .' to open VS Code from WSL
+appendWindowsPath=true
+
+[automount]
+# === FILESYSTEM MOUNTING & PERMISSIONS ===
+# Configure how Windows drives are mounted and their file permissions
+# 
+# metadata: Enable WSL metadata for files (required for correct permissions)
+# umask=22: Default directory permissions (755 in octal)
+# fmask=11: Default file permissions (644 in octal, removes execute bits)
+#
+# This fixes permission issues when accessing /mnt/c/ and other mounts
+options="metadata,umask=22,fmask=11"
