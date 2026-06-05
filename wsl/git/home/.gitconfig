@@ -1,0 +1,5 @@
+[user]
+    name = Andrew Kington
+    email = your-personal@email.com
+[core]
+    excludesfile = ~/.gitignore_global
